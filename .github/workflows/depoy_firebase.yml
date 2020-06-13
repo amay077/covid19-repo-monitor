@@ -6,7 +6,6 @@ name: PUBLISH TO GITHUB PAGES
 on:
   push:
     branches:
-      - master
       - development
   schedule :
     - cron : '0 18 * * *' #UTC
@@ -27,7 +26,7 @@ jobs:
         with:
           fetch-depth: 0
       - run: git branch -l
-      - name: generate-data
+      - name: publish-site
         uses: actions/setup-node@v1
         with:
           node-version: v12.14.1
@@ -42,13 +41,7 @@ jobs:
       - run: yarn build-prod
         working-directory: ./spa
           
-      - name: Display current path
-        run: pwd
-      - name: Display current files
-        run: ls -R
-
       - run: git checkout master
-      - run: mkdir ./docs
       - run: rm -rf ./docs/*
       - run: cp ./spa/dist/prod/* ./docs
 
