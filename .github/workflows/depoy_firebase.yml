@@ -43,3 +43,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    - name: upload
+      uses: actions/upload-artifact@v1
+      with:
+        name: upload-data
+        path: ./spa/dist/prod
