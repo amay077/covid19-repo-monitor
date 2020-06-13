@@ -29,10 +29,10 @@ export class CommandGenerate {
     let code = 0;
     console.info(`${this.constructor.name}:: run start`);
 
-    this.accessToken = process.env.GITHUB_ACCESS_TOKEN ?? '';
+    this.accessToken = process.env.GITHUB_TOKEN  ?? '';
     if (StringUtils.isEmpty(this.accessToken)) {
       code = -1;
-      console.error(`${this.constructor.name}:: GITHUB_ACCESS_TOKEN is not found.`);
+      console.error(`${this.constructor.name}:: GITHUB_TOKEN  is not found.`);
       return code;
     }
 
