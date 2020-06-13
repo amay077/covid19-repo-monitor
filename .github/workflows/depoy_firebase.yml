@@ -12,9 +12,6 @@ on:
     - cron : '0 18 * * *' #UTC
 #    - cron : '0 3 * * *' JST
 
-defaults:
-  run:
-    working-directory: ./spa
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,10 +20,7 @@ jobs:
         node-version: [12.x]
     steps:      
     - uses: actions/checkout@v2
-    - name: Deploy to prod
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    - name: generate-data
       uses: actions/setup-node@v1
       with:
         node-version: v12.14.1
@@ -36,6 +30,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       working-directory: ./tool
+    - name: build-site
     - run: yarn --frozen-lockfile
       working-directory: ./spa
     - run: yarn build-prod
@@ -47,19 +42,20 @@ jobs:
         path: ./spa/dist/prod
   push:
     needs: build
-    name: push data
+    name: push-data
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           ref: master
+          path: site
       - name: upload
         uses: actions/download-artifact@v1
         with:
           name: upload-data
-      - run: cp upload-data/* docs
+      - run: cp upload-data/* ./site/docs
       - run: git config --global user.email "bot@github.com"
       - run: git config --global user.name "BOT"
-      - run: cd data && git add ./docs
-      - run: cd data && git commit -m "update data"
-      - run: cd data && git push origin data
+      - run: cd site && git add ./docs
+      - run: cd site && git commit -m "update data"
+      - run: cd site && git push origin data
