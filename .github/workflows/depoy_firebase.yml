@@ -19,6 +19,15 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
+    - name: Use secret variable
+      env:
+        SECRET_VARIABLE: ${{ secrets.SECRET_VARIABLE }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo ${SECRET_VARIABLE}
+        echo ${GITHUB_TOKEN}
+        echo ${GITHUB_SHA}
+
     - uses: actions/checkout@v2
     - name: Deploy to prod
       env:
