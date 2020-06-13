@@ -28,6 +28,9 @@ jobs:
       with:
         node-version: v12.14.1
     - run: echo ${GITHUB_TOKEN}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     - run: yarn --frozen-lockfile
       working-directory: ./tool
     - run: yarn gen
