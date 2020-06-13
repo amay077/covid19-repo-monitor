@@ -36,3 +36,6 @@ jobs:
       working-directory: ./tool
     - run: yarn --frozen-lockfile
     - run: yarn deploy-prod
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
