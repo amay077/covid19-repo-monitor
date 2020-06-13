@@ -44,11 +44,12 @@ jobs:
       - name: Display current files
         run: ls -R
 
+      - run: git checkout master
       - run: rm -rf ./docs/*
       - run: cp ./spa/dist/prod/* ./docs
 
       - run: git config --global user.email "bot@github.com"
       - run: git config --global user.name "BOT"
-      - run: cd site && git add ./docs
-      - run: cd site && git commit -m "update data"
-      - run: cd site && git push origin data
+      - run: git add ./docs
+      - run: git commit -m "update data"
+      - run: git push origin data
