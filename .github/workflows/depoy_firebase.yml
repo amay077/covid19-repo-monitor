@@ -44,8 +44,9 @@ jobs:
     name: push-data
     runs-on: ubuntu-latest
     steps:
-      - name: Display current files
+      - name: Display current path
         run: pwd
+      - name: Display current files
         run: ls -R
       # - uses: actions/checkout@v2
       #   with:
