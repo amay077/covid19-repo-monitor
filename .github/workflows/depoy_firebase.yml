@@ -44,15 +44,19 @@ jobs:
     name: push-data
     runs-on: ubuntu-latest
     steps:
+      - name: Display current files
+        run: pwd
+        run: ls -R
       # - uses: actions/checkout@v2
       #   with:
       #     ref: master
       #     path: site
-      - run: ls
       - name: upload
         uses: actions/download-artifact@v2
         with:
           name: upload-data
+      - run: ls
+      - run: pwd
       - run: cp upload-data/* ./site/docs
       - run: git config --global user.email "bot@github.com"
       - run: git config --global user.name "BOT"
