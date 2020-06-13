@@ -26,7 +26,11 @@ jobs:
         node-version: v12.14.1
     - run: npm ci
       working-directory: ./tool
+      env: # Or as an environment variable
+        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
     - run: npm run gen
       working-directory: ./tool
     - run: npm ci
     - run: npm run deploy-prod
+      env: # Or as an environment variable
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
