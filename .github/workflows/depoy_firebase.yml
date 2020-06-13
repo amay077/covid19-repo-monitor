@@ -24,13 +24,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: v12.14.1
-    - run: npm ci
+    - run: yarn --frozen-lockfile
       working-directory: ./tool
-      env: # Or as an environment variable
+      env:
         GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-    - run: npm run gen
+    - run: yarn gen
       working-directory: ./tool
-    - run: npm ci
-    - run: npm run deploy-prod
-      env: # Or as an environment variable
+    - run: yarn --frozen-lockfile
+    - run: yarn deploy-prod
+      env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
