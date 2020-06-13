@@ -30,6 +30,7 @@ jobs:
       working-directory: ./tool
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: build-site
     - run: yarn --frozen-lockfile
       working-directory: ./spa
     - run: yarn build-prod
@@ -44,10 +45,10 @@ jobs:
     name: push-data
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: master
-          path: site
+      # - uses: actions/checkout@v2
+      #   with:
+      #     ref: master
+      #     path: site
       - name: upload
         uses: actions/download-artifact@v1
         with:
