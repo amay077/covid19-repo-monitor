@@ -50,7 +50,7 @@ jobs:
       #     path: site
       - run: ls
       - name: upload
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: upload-data
       - run: cp upload-data/* ./site/docs
