@@ -44,7 +44,7 @@ jobs:
         working-directory: ./spa
           
       - run: echo "master ブランチに変更（GitHub Pages）"
-      - run: git checkout master
+      - run: git checkout master --force
       - run: echo "生成した静的サイトデータを master の docs にコピー"
       - run: rm -rf ./docs/*
       - run: cp ./spa/dist/prod/* ./docs
