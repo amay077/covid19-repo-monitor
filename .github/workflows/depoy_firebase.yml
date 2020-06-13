@@ -48,16 +48,14 @@ jobs:
     name: push data
     runs-on: ubuntu-latest
     steps:
-      - name: Clone another repository
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git clone -b master https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/amay077/covid19-repo-monitor data
+      - uses: actions/checkout@v2
+        with:
+          ref: master
       - name: upload
         uses: actions/download-artifact@v1
         with:
           name: upload-data
-      - run: cp upload-data/* data/docs
+      - run: cp upload-data/* docs
       - run: git config --global user.email "bot@github.com"
       - run: git config --global user.name "BOT"
       - run: cd data && git add .
