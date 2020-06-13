@@ -22,31 +22,36 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:      
+      - run: echo "全てのブランチを clone"
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: git branch -l
       - name: publish-site
         uses: actions/setup-node@v1
         with:
           node-version: v12.14.1
+      - run: echo "更新状況を取得して data.json を生成"
       - run: yarn --frozen-lockfile
         working-directory: ./tool
       - run: yarn gen
         working-directory: ./tool
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: echo "静的サイトを生成"
       - run: yarn --frozen-lockfile
         working-directory: ./spa
       - run: yarn build-prod
         working-directory: ./spa
           
+      - run: echo "master ブランチに変更（GitHub Pages）"
       - run: git checkout master
+      - run: echo "生成した静的サイトデータを master の docs にコピー"
       - run: rm -rf ./docs/*
       - run: cp ./spa/dist/prod/* ./docs
 
+      - run: echo "master へ push してサイト更新"
       - run: git config --global user.email "bot@github.com"
       - run: git config --global user.name "BOT"
       - run: git add ./docs
-      - run: git commit -m "update data"
+      - run: git commit -m "publish site"
       - run: git push
