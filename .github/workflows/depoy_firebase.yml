@@ -24,6 +24,9 @@ jobs:
         node-version: [12.x]
     steps:      
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: git branch -l
       - name: generate-data
         uses: actions/setup-node@v1
         with:
