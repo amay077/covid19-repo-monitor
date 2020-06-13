@@ -30,8 +30,6 @@ jobs:
       working-directory: ./tool
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      working-directory: ./tool
-    - name: build-site
     - run: yarn --frozen-lockfile
       working-directory: ./spa
     - run: yarn build-prod
