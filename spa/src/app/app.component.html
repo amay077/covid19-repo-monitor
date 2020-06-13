@@ -1,0 +1,51 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h2 class="display-5">全国の COVID-19 プロジェクトの開発状況を見るページ</h2>
+    <p class="lead">プロジェクトの repository に送られたプルリクエストを新しい順に表示しています（BOT と思われるものは除く）。</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-9 mb-2">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" [checked]="latestOnly" (change)="latestOnly = !latestOnly" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          各プロジェクト最新1件のみ
+        </label>
+      </div>
+    </div>
+    <div class="col-3 mb-2 text-right">
+      最終更新: {{lastUpdateAtFormatted}}
+    </div>
+
+    <div class="col-12">
+
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th style="text-align: right;">#</th>
+            <th style="width: 200px;">日付</th>
+            <th style="width: 100px;">地域</th>
+            <th>運営</th>
+            <th>タイトル</th>
+            <th>PR者</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of displayItems; let i = index;">
+            <td style="text-align: right;">{{i + 1}}</td>
+            <td>{{formatDate(item.updated_at)}}</td>
+            <td><a target="_blank" [href]="item.place_url">{{item.place}}</a></td>
+            <td><a target="_blank" [href]="item.team_url">{{item.team}}</a></td>
+            <td><a target="_blank" [href]="item.url">#{{item.number}} {{item.title}}</a></td>
+            <td><a target="_blank" [href]="item.user_url">{{item.user_id}}</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>
+
