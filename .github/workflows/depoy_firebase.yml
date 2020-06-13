@@ -22,14 +22,10 @@ jobs:
     - name: Use secret variable
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        echo ${GITHUB_TOKEN}
-
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      run: echo ${GITHUB_TOKEN}
     - uses: actions/checkout@v2
     - name: Deploy to prod
-      env:
-        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       uses: actions/setup-node@v1
       with:
         node-version: v12.14.1
