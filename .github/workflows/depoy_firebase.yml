@@ -48,6 +48,7 @@ jobs:
       #   with:
       #     ref: master
       #     path: site
+      - run: ls
       - name: upload
         uses: actions/download-artifact@v1
         with:
