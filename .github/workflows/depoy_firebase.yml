@@ -54,6 +54,7 @@ jobs:
       - name: upload
         uses: actions/download-artifact@v2
         with:
+          path: ./
           name: upload-data
       - run: ls
       - run: pwd
