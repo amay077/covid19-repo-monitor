@@ -12,6 +12,10 @@ on:
     - cron : '0 18 * * *' #UTC
 #    - cron : '0 3 * * *' JST
 
+defaults:
+  run:
+    working-directory: ./
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,47 +23,29 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:      
-    - uses: actions/checkout@v2
-    - name: generate-data
-      uses: actions/setup-node@v1
-      with:
-        node-version: v12.14.1
-    - run: yarn --frozen-lockfile
-      working-directory: ./tool
-    - run: yarn gen
-      working-directory: ./tool
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: yarn --frozen-lockfile
-      working-directory: ./spa
-    - run: yarn build-prod
-      working-directory: ./spa
-    - name: upload
-      uses: actions/upload-artifact@v1
-      with:
-        name: upload-data
-        path: ./spa/dist/prod
-  push:
-    needs: build
-    name: push-data
-    runs-on: ubuntu-latest
-    steps:
+      - uses: actions/checkout@v2
+      - name: generate-data
+        uses: actions/setup-node@v1
+        with:
+          node-version: v12.14.1
+      - run: yarn --frozen-lockfile
+        working-directory: ./tool
+      - run: yarn gen
+        working-directory: ./tool
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: yarn --frozen-lockfile
+        working-directory: ./spa
+      - run: yarn build-prod
+        working-directory: ./spa
+          
       - name: Display current path
         run: pwd
       - name: Display current files
         run: ls -R
-      # - uses: actions/checkout@v2
-      #   with:
-      #     ref: master
-      #     path: site
-      - name: upload
-        uses: actions/download-artifact@v2
-        with:
-          path: ./
-          name: upload-data
-      - run: ls
-      - run: pwd
-      - run: cp upload-data/* ./site/docs
+
+      - run: cp .spa/dist/prod/* ./site/docs
+
       - run: git config --global user.email "bot@github.com"
       - run: git config --global user.name "BOT"
       - run: cd site && git add ./docs
