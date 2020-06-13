@@ -44,7 +44,8 @@ jobs:
       - name: Display current files
         run: ls -R
 
-      - run: cp .spa/dist/prod/* ./site/docs
+      - run: rm -rf ./docs/*
+      - run: cp ./spa/dist/prod/* ./docs
 
       - run: git config --global user.email "bot@github.com"
       - run: git config --global user.name "BOT"
