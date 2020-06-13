@@ -21,16 +21,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Deploy to prod
+      env:
+        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       uses: actions/setup-node@v1
       with:
         node-version: v12.14.1
     - run: yarn --frozen-lockfile
       working-directory: ./tool
-      env:
-        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
     - run: yarn gen
       working-directory: ./tool
     - run: yarn --frozen-lockfile
     - run: yarn deploy-prod
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
