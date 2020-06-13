@@ -27,7 +27,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: v12.14.1
-    - run: echo $GITHUB_TOKEN
+    - run: echo ${GITHUB_TOKEN}
     - run: yarn --frozen-lockfile
       working-directory: ./tool
     - run: yarn gen
