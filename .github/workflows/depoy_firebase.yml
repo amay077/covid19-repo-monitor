@@ -18,14 +18,12 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-    steps:
-    - name: Use secret variable
+    steps:      
+    - uses: actions/checkout@v2
+    - name: Deploy to prod
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      run: echo ${GITHUB_TOKEN}
-    - uses: actions/checkout@v2
-    - name: Deploy to prod
       uses: actions/setup-node@v1
       with:
         node-version: v12.14.1
