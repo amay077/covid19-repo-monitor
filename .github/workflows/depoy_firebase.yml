@@ -17,9 +17,7 @@ defaults:
     working-directory: ./spa
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [12.x]
@@ -37,15 +35,27 @@ jobs:
     - run: yarn gen
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       working-directory: ./tool
     - run: yarn --frozen-lockfile
-    - run: yarn deploy-prod
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    - run: yarn build-prod
     - name: upload
       uses: actions/upload-artifact@v1
       with:
         name: upload-data
         path: ./spa/dist/prod
+  push:
+    needs: build
+    name: push data
+    runs-on: ubuntu-latest
+    steps:
+      - run: git clone -b master https://github.com/amay077/covid19-repo-monitor data
+      - name: upload
+        uses: actions/download-artifact@v1
+        with:
+          name: upload-data
+      - run: cp upload-data/* data/doc
+      - run: git config --global user.email "bot@github.com"
+      - run: git config --global user.name "BOT"
+      - run: cd data && git add .
+      - run: cd data && git commit -m "update data"
+      - run: cd data && git push origin data
