@@ -54,7 +54,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.items = data.data.filter(pr =>
+    this.items = Enumerable.from(data.data).where(pr =>
+      pr.merged_at != null &&
       !pr.user_url.startsWith('https://github.com/apps/github-actions') &&
       !pr.user_url.startsWith('https://github.com/apps/transifex-integration') &&
       pr.title !== 'Update data.json' &&
@@ -64,7 +65,9 @@ export class AppComponent implements OnInit {
       pr.title !== 'add data' &&
       !pr.title.startsWith('merge to staging') &&
       !pr.title.startsWith('データ更新')
-    );
+    )
+    .orderByDescending(pr => pr.merged_at)
+    .toArray();
 
     this.lastUpdateAt = dayjs(data.last_update_at);
   }
