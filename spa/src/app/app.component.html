@@ -37,7 +37,7 @@
             <td style="text-align: right;">{{i + 1}}</td>
             <td>{{formatDate(item.merged_at)}}</td>
             <td><a target="_blank" [href]="item.place_url">{{item.place}}</a></td>
-            <td><a target="_blank" [href]="item.team_url">{{item.team}}</a></td>
+            <td><a target="_blank" [href]="item.team_url">{{item.team}}&nbsp;(<i class="fa fa-star"></i>:{{item.stars}})</a></td>
             <td><a target="_blank" [href]="item.url">#{{item.number}} {{item.title}}</a></td>
             <td><a target="_blank" [href]="item.user_url">{{item.user_id}}</a></td>
           </tr>

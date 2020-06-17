@@ -12,6 +12,7 @@ type PR = {
   place_url: string,
   team: string,
   team_url: string,
+  stars: number,
   number: number,
   title: string,
   url: string,
@@ -71,7 +72,7 @@ export class CommandGenerate {
       }
     };
 
-    const results = await axios.get<any>(
+    const results = await axios.get<any[]>(
       `https://api.github.com/repos/${proj.repo}/pulls?state=closed&base=development&sort=updated&direction=desc&page=1&per_page=${this.maxCount}`,
       config);
 
@@ -80,6 +81,7 @@ export class CommandGenerate {
       place_url: proj.publish_url,
       team: proj.team,
       team_url: `https://github.com/${proj.repo}`,
+      stars: pr.base.repo.stargazers_count,
       number: pr.number,
       title:  pr.title,
       url:  pr.html_url,

@@ -28,6 +28,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
     "bootstrap": "^4.4.0",
     "dayjs": "^1.8.28",
+    "font-awesome": "^4.7.0",
     "github-fork-ribbon-css": "^0.2.3",
     "linq": "^3.2.2",
     "rxjs": "~6.5.4",
